@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 """
-catalog.py — načtení, odvození a validace katalogu VEX IQ dílů.
+catalog.py — load, derive and validate the VEX IQ parts catalog.
 
-Použití:
-    python3 tools/catalog.py validate        # zkontroluje katalog (exit 1 při chybě)
-    python3 tools/catalog.py report          # souhrn: počty dílů, co chybí změřit
-    python3 tools/catalog.py show beam-1x8   # detail jednoho dílu
+Usage:
+    python3 tools/catalog.py validate        # check the catalog (exit 1 on error)
+    python3 tools/catalog.py report          # summary: part counts, what still needs measuring
+    python3 tools/catalog.py show beam-1x8   # detail of a single part
 """
 
 from __future__ import annotations
 
 import argparse
 import pathlib
-import sys
 
 import yaml
 
@@ -20,14 +19,16 @@ BASE = pathlib.Path(__file__).resolve().parent.parent
 CATALOG = BASE / "catalog"
 
 PITCH = 12.7          # mm, VEX IQ
-THICK = 6.35          # mm, tloušťka nosníku/desky (0.25")
-STAVY = {"odvozeno", "k_mereni", "zmereno", "spec"}
+THICK = 6.35          # mm, beam/plate thickness (0.25")
+STATUSES = {"derived", "needs_measure", "measured", "spec"}
+CATEGORIES = {"beam", "angle_beam", "plate", "pin", "standoff", "shaft",
+              "gear", "wheel", "small_part", "accessory"}
 
 
 def load(name: str):
     p = CATALOG / name
     if not p.exists():
-        raise SystemExit(f"chybí {p}")
+        raise SystemExit(f"missing {p}")
     return yaml.safe_load(p.read_text(encoding="utf-8"))
 
 
@@ -44,13 +45,13 @@ def cases() -> list[dict]:
 
 
 def derive(part: dict) -> None:
-    """Doplní odvozené rozměry z počtu děr (kde chybí)."""
-    r = part.get("rozmer") or {}
-    n = part.get("pocet_der")
-    if n and not r.get("l"):
-        r["l"] = round(n * PITCH, 2)
-        r["h"] = r.get("h") or THICK
-        part["rozmer"] = r
+    """Fill in dimensions derived from the hole count when they are missing."""
+    size = part.get("size") or {}
+    holes = part.get("holes")
+    if holes and not size.get("l"):
+        size["l"] = round(holes * PITCH, 2)
+        size["h"] = size.get("h") or THICK
+        part["size"] = size
 
 
 def validate() -> list[str]:
@@ -59,50 +60,48 @@ def validate() -> list[str]:
     for p in parts():
         pid = p.get("id")
         if not pid:
-            errs.append(f"díl bez id: {p}")
+            errs.append(f"part without id: {p}")
             continue
         if pid in ids:
-            errs.append(f"duplicitní id: {pid}")
+            errs.append(f"duplicate id: {pid}")
         ids.add(pid)
-        if p.get("kategorie") not in {"beam", "beam_uhlovy", "plate", "pin",
-                                     "standoff", "shaft", "gear", "wheel", "drobne", "doplnek"}:
-            errs.append(f"{pid}: neznámá kategorie {p.get('kategorie')!r}")
-        if p.get("stav") not in STAVY:
-            errs.append(f"{pid}: neznámý stav {p.get('stav')!r}")
-        r = p.get("rozmer") or {}
+        if p.get("category") not in CATEGORIES:
+            errs.append(f"{pid}: unknown category {p.get('category')!r}")
+        if p.get("status") not in STATUSES:
+            errs.append(f"{pid}: unknown status {p.get('status')!r}")
+        size = p.get("size") or {}
         for axis in ("l", "w", "h"):
-            v = r.get(axis)
+            v = size.get(axis)
             if v is not None and (not isinstance(v, (int, float)) or v <= 0):
-                errs.append(f"{pid}: rozmer.{axis}={v!r} není kladné číslo")
-        if p.get("stav") == "odvozeno" and (r.get("l") is None or r.get("h") is None):
-            errs.append(f"{pid}: stav 'odvozeno', ale chybí rozměry")
-    known = ids
+                errs.append(f"{pid}: size.{axis}={v!r} is not a positive number")
+        if p.get("status") == "derived" and (size.get("l") is None or size.get("h") is None):
+            errs.append(f"{pid}: status 'derived' but dimensions are missing")
     for k in kits():
-        for pid, qty in (k.get("dily") or {}).items():
+        for pid, qty in (k.get("parts") or {}).items():
             if pid.startswith("_"):
                 continue
-            if pid not in known:
-                errs.append(f"kit {k.get('id')}: neznámý díl {pid!r}")
+            if pid not in ids:
+                errs.append(f"kit {k.get('id')}: unknown part {pid!r}")
             if not isinstance(qty, int) or qty <= 0:
-                errs.append(f"kit {k.get('id')}: díl {pid!r} má divný počet {qty!r}")
+                errs.append(f"kit {k.get('id')}: part {pid!r} has a bad quantity {qty!r}")
     for c in cases():
-        if c.get("stav") not in STAVY:
-            errs.append(f"case {c.get('id')}: neznámý stav {c.get('stav')!r}")
+        if c.get("status") not in STATUSES:
+            errs.append(f"case {c.get('id')}: unknown status {c.get('status')!r}")
     return errs
 
 
 def report() -> None:
     ps = parts()
-    k_mereni = [p["id"] for p in ps if p.get("stav") == "k_mereni"]
-    print(f"dílů v katalogu: {len(ps)}")
-    print(f"  odvozeno z pitchů: {sum(1 for p in ps if p.get('stav') == 'odvozeno')}")
-    print(f"  k měření šuplerou: {len(k_mereni)}")
-    if k_mereni:
-        print("   " + ", ".join(k_mereni))
+    pending = [p["id"] for p in ps if p.get("status") == "needs_measure"]
+    print(f"parts in catalog: {len(ps)}")
+    print(f"  derived from pitch: {sum(1 for p in ps if p.get('status') == 'derived')}")
+    print(f"  waiting for calipers: {len(pending)}")
+    if pending:
+        print("   " + ", ".join(pending))
     print()
     for k in kits():
-        n = sum(v for kk, v in (k.get("dily") or {}).items() if not kk.startswith("_"))
-        print(f"kit {k['id']}: {len(k.get('dily') or {})} typů dílů, {n} kusů")
+        n = sum(v for key, v in (k.get("parts") or {}).items() if not key.startswith("_"))
+        print(f"kit {k['id']}: {len(k.get('parts') or {})} part types, {n} pieces")
 
 
 def main() -> int:
@@ -114,11 +113,11 @@ def main() -> int:
     if a.cmd == "validate":
         errs = validate()
         if errs:
-            print("CHYBY v katalogu:")
+            print("catalog errors:")
             for e in errs:
-                print("  ✗", e)
+                print("  x", e)
             return 1
-        print(f"✓ katalog v pořádku ({len(parts())} dílů, {len(kits())} sestav, {len(cases())} boxů)")
+        print(f"OK: catalog valid ({len(parts())} parts, {len(kits())} kits, {len(cases())} cases)")
         return 0
     if a.cmd == "report":
         report()
@@ -128,7 +127,7 @@ def main() -> int:
             if p["id"] == a.arg:
                 print(yaml.safe_dump(p, allow_unicode=True, sort_keys=False))
                 return 0
-        print(f"díl {a.arg!r} nenalezen")
+        print(f"part {a.arg!r} not found")
         return 1
     return 2
 

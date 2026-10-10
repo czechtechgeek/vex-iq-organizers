@@ -1,5 +1,5 @@
-// Referenční vložka: 3×2 buňky, 3U — dvě kapsy na nosníky 1x8 položené naplocho.
-// Slouží k ověření mřížky (42 mm) a nožiček; zároveň první použitelná vložka.
+// Reference tray: 3x2 cells, 3U tall — two channels for 1x8 beams laid flat.
+// Serves as a grid/foot fit test and as the first usable tray.
 // build:  scad.py build scad/examples/fit_test_3x2x3.scad --name fit_3x2x3 --views iso,top
 
 include <gf.scad>
@@ -8,27 +8,27 @@ NX = 3;
 NY = 2;
 H_U = 3;
 
-NOSNIK = 101.6;          // 1x8 beam
-SIRKA  = 12.7;
-TL     = 6.35;
+BEAM_LEN = 101.6;        // 1x8 beam
+BEAM_W   = 12.7;
+BEAM_T   = 6.35;
 
-KAPSA_L = NOSNIK + 3;              // 104.6
-KAPSA_W = SIRKA + 5;               // 17.7
-KAPSA_H = TL + 1.5;                // 7.85 (dno kapsy + but to sedí pod okrajem)
+POCKET_L = BEAM_LEN + 3;           // 104.6
+POCKET_W = BEAM_W + 5;             // 17.7
+POCKET_H = BEAM_T + 1.5;           // 7.85
 
-// kontrola, že kapsa sedí do půdorysu (ať se chyba neopakuje)
-assert(NX * GRID - TOL > KAPSA_L + 2 * WALL_DEF, "kapsa je delší než vložka");
-assert(NY * GRID - TOL > 2 * KAPSA_W + 3 * WALL_DEF, "dvě kapsy se nevejdou na šířku");
+// fail loudly instead of silently cutting through the walls
+assert(NX * GRID - TOL > POCKET_L + 2 * WALL_DEF, "pocket is longer than the tray");
+assert(NY * GRID - TOL > 2 * POCKET_W + 3 * WALL_DEF, "two pockets do not fit across");
 
 difference() {
     gf_tray(NX, NY, H_U, lip = false, magnets = false);
 
     for (i = [-1, 1])
-        translate([0, i * (KAPSA_W + WALL_DEF) / 2, HEIGHT_U])
-            pocket_channel(KAPSA_L, KAPSA_W, KAPSA_H, finger = 7);
+        translate([0, i * (POCKET_W + WALL_DEF) / 2, HEIGHT_U])
+            pocket_channel(POCKET_L, POCKET_W, POCKET_H, finger = 7);
 
-    // popisky vyryté do dna kapsy (deboss do 7mm dna)
+    // labels engraved into the cavity floor (debossed into the 7 mm base)
     for (i = [-1, 1])
-        translate([KAPSA_L / 2 - 12, i * (KAPSA_W + WALL_DEF) / 2, HEIGHT_U])
+        translate([POCKET_L / 2 - 12, i * (POCKET_W + WALL_DEF) / 2, HEIGHT_U])
             label_text("1x8", size = 8, depth = 0.6);
 }

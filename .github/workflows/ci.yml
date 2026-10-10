@@ -14,29 +14,29 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Instalace závislostí
+      - name: Install dependencies
         run: pip install -r requirements.txt
-      - name: Kontrola katalogu
+      - name: Validate catalog
         run: python3 tools/catalog.py validate
-      - name: Testy
+      - name: Run tests
         run: pytest -q
 
   render:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Instalace OpenSCAD
+      - name: Install OpenSCAD
         run: sudo apt-get update && sudo apt-get install -y openscad xvfb
-      - name: Vykreslit referenční vložku
+      - name: Render the reference tray
         run: |
           export OPENSCADPATH=$PWD/scad/lib
           mkdir -p out
           openscad --export-format=binstl -o out/fit_3x2x3.stl scad/examples/fit_test_3x2x3.scad
-          # PNG (offscreen) na běžci bez GPU potřebuje virtuální X server
+          # offscreen PNG needs a virtual X server on CI runners (no GPU)
           xvfb-run -a openscad -o out/fit_3x2x3.png --camera=0,0,0,55,0,25,0 --viewall \
             --autocenter --imgsize=1000,700 scad/examples/fit_test_3x2x3.scad
-      - name: Nahraj artefakty
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: vygenerovane-modely
+          name: generated-models
           path: out/

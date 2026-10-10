@@ -2,10 +2,10 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
-# výstupy buildu (generují se z scad/)
+# build outputs (generated from scad/)
 build/
 fit_*/
 !docs/img/
 
-# lokální poznámky
+# local notes
 *.local.yaml

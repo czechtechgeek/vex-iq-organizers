@@ -1,18 +1,19 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// gf.scad — Gridfinity základ dle otevřené spec (gridfinity.xyz)
-// Čísla jsou ze spec a z referenční implementace gridfinity-rebuilt-openscad.
-// Nic tady nezaokrouhluj "od oka" — když se změní číslo, změň i test v tests/test_gf_dims.py
+// gf.scad — Gridfinity base geometry per the open spec (gridfinity.xyz)
+// Numbers come from the spec and from the reference implementation
+// (gridfinity-rebuilt-openscad). Do not round them by eye — if a value changes,
+// update tests/test_catalog.py as well.
 // ─────────────────────────────────────────────────────────────────────────────
 
-// mřížka a výšky
-GRID        = 42.0;   // pitch buňky
-HEIGHT_U    = 7.0;    // jedna výšková jednotka
-TOL         = 0.5;    // bin = 42n - 0.5 (0.25 mm na stranu)
+// grid and heights
+GRID        = 42.0;   // cell pitch
+HEIGHT_U    = 7.0;    // one height unit
+TOL         = 0.5;    // bin = 42n - 0.5 (0.25 mm per side)
 
-// nožička (foot), zdola nahoru: 45° / svisle / 45°
+// foot, bottom to top: 45 deg / vertical / 45 deg
 FOOT_LOW    = 0.8;
 FOOT_VERT   = 1.8;
-FOOT_UP     = 2.15;   // součet = 4.75
+FOOT_UP     = 2.15;   // total 4.75
 FOOT_H      = FOOT_LOW + FOOT_VERT + FOOT_UP;
 FOOT_INSET_BOTTOM = 3.2;   // 42 - 35.6
 FOOT_INSET_VERT   = 2.4;   // 42 - 37.2
@@ -21,41 +22,41 @@ FOOT_R_BOTTOM = 0.8;
 FOOT_R_VERT   = 1.6;
 FOOT_R_TOP    = 3.75;
 
-// stacking lip (nasednutí dalšího boxu), zdola nahoru: 0.7 / 1.8 / 1.9
+// stacking lip, bottom to top: 0.7 / 1.8 / 1.9
 LIP_LOW     = 0.7;
 LIP_VERT    = 1.8;
 LIP_UP      = 1.9;
 LIP_H       = LIP_LOW + LIP_VERT + LIP_UP;   // 4.4
 
-// magnety a šrouby
-MAGNET_D      = 6.5;   // pro magnet ⌀6 × 2
+// magnets and screws
+MAGNET_D      = 6.5;   // for a 6 x 2 mm magnet
 MAGNET_H      = 2.4;
-MAGNET_OFFSET = 13.0;  // od středu buňky
+MAGNET_OFFSET = 13.0;  // from the cell centre
 SCREW_D       = 3.2;   // M3
 
-// stěny
+// walls
 WALL_DEF    = 1.2;
 FLOOR_DEF   = 0.8;
 
 $fn = 64;
 
-// ── 2D profily ───────────────────────────────────────────────────────────────
-// čtverec o straně 42-2*inset se zaoblenými rohy o poloměru r (vycentrovaný)
+// ── 2D profiles ──────────────────────────────────────────────────────────────
+// square of side 42-2*inset with rounded corners of radius r (centred)
 module gf_profile(inset, r) {
     offset(r = r) square([GRID - 2 * inset - 2 * r, GRID - 2 * inset - 2 * r], center = true);
 }
 
-// obdélníkový půdorys vnějšího těla (nx × ny buněk, mínus tolerance)
+// outer body footprint (nx x ny cells, minus tolerance)
 module body_profile(nx, ny, r = FOOT_R_TOP) {
     offset(r = r) square([nx * GRID - TOL - 2 * r, ny * GRID - TOL - 2 * r], center = true);
 }
 
-// tenká vrstva profilu (pomocník pro hull)
+// thin slice of a profile (helper for hull)
 module gf_slice(z, inset, r, t = 0.06) {
     translate([0, 0, z]) linear_extrude(height = t) gf_profile(inset, r);
 }
 
-// ── nožička jedné buňky ──────────────────────────────────────────────────────
+// ── single-cell foot ─────────────────────────────────────────────────────────
 module gf_foot_cell() {
     hull() {
         gf_slice(0, FOOT_INSET_BOTTOM, FOOT_R_BOTTOM);
@@ -77,13 +78,13 @@ module gf_feet(nx, ny) {
             gf_foot_cell();
 }
 
-// ── magnety / šrouby do nožičky ──────────────────────────────────────────────
+// ── magnet / screw pockets in the feet ───────────────────────────────────────
 module gf_magnet_holes(nx, ny, screw = false) {
     for (i = [0 : nx - 1], j = [0 : ny - 1]) {
         cx = (i - (nx - 1) / 2) * GRID;
         cy = (j - (ny - 1) / 2) * GRID;
         for (sx = [-1, 1], sy = [-1, 1]) {
-            translate([cx + sx * MAGNET_OFFSET / 2 * 2, cy + sy * MAGNET_OFFSET / 2 * 2, MAGNET_H])
+            translate([cx + sx * MAGNET_OFFSET, cy + sy * MAGNET_OFFSET, MAGNET_H])
                 cylinder(d = MAGNET_D, h = MAGNET_H + 0.2, center = true);
             if (screw)
                 translate([cx + sx * MAGNET_OFFSET, cy + sy * MAGNET_OFFSET, -0.1])
@@ -92,8 +93,9 @@ module gf_magnet_holes(nx, ny, screw = false) {
     }
 }
 
-// ── tělo (obálka + dutina) ───────────────────────────────────────────────────
-// vrací dutinu (k odpočtu); výška h_u je v jednotkách, dno dutiny je v 7 mm
+// ── body (shell + cavity) ────────────────────────────────────────────────────
+// returns the cavity (to be subtracted); h_u is in height units,
+// the cavity floor sits 7 mm above the build plate
 module gf_cavity(nx, ny, h_u, wall, floor, corner_r) {
     translate([0, 0, HEIGHT_U])
         linear_extrude(height = h_u * HEIGHT_U + 1)
@@ -101,9 +103,9 @@ module gf_cavity(nx, ny, h_u, wall, floor, corner_r) {
                 square([nx * GRID - TOL - 2 * corner_r, ny * GRID - TOL - 2 * corner_r], center = true);
 }
 
-// ── lip (nasednutí) ──────────────────────────────────────────────────────────
+// ── stacking lip ─────────────────────────────────────────────────────────────
 module gf_lip(nx, ny, wall, top_z) {
-    // obvodový prstenec: 0.7 nahoru/ven, 1.8 svisle, 1.9 dovnitř
+    // perimeter rim: 0.7 up/out, 1.8 vertical, 1.9 in
     translate([0, 0, top_z])
         difference() {
             hull() {
@@ -122,19 +124,19 @@ module gf_lip(nx, ny, wall, top_z) {
         }
 }
 
-// ── hlavní modul: vložka / box ───────────────────────────────────────────────
+// ── main module: tray / bin ──────────────────────────────────────────────────
 module gf_tray(nx, ny, h_u,
                wall = WALL_DEF, floor = FLOOR_DEF,
                lip = true, magnets = false, screws = false,
                corner_r = FOOT_R_TOP) {
     difference() {
         union() {
-            // nožičky + most (spodní část do 7 mm)
+            // feet + bridge (bottom part up to 7 mm)
             gf_feet(nx, ny);
             linear_extrude(height = HEIGHT_U)
                 offset(r = corner_r)
                     square([nx * GRID - TOL - 2 * corner_r, ny * GRID - TOL - 2 * corner_r], center = true);
-            // stěny
+            // walls
             translate([0, 0, HEIGHT_U])
                 linear_extrude(height = h_u * HEIGHT_U - HEIGHT_U)
                     difference() {
@@ -146,14 +148,14 @@ module gf_tray(nx, ny, h_u,
                     }
             if (lip) gf_lip(nx, ny, wall, h_u * HEIGHT_U);
         }
-        // dutina (dno je 7 mm nad podložkou)
+        // cavity (floor is 7 mm above the build plate)
         gf_cavity(nx, ny, h_u, wall, floor, corner_r);
         if (magnets || screws) gf_magnet_holes(nx, ny, screws);
     }
 }
 
-// ── kapsy (pockets) ──────────────────────────────────────────────────────────
-// obdélníková kapsa se zkoseným vstupem a volitelným vybráním pro prst
+// ── pockets ──────────────────────────────────────────────────────────────────
+// rectangular pocket with a chamfered entry and an optional finger notch
 module pocket_rect(l, w, h, clearance = 0.4, entry = 1.2, finger = 0, r = 1.5) {
     ll = l + clearance;
     ww = w + clearance;
@@ -172,19 +174,19 @@ module pocket_rect(l, w, h, clearance = 0.4, entry = 1.2, finger = 0, r = 1.5) {
     }
 }
 
-// kanál na nosník (díl položený naplocho) s nehtem na vytažení
+// channel for a beam lying flat, with an optional finger notch
 module pocket_channel(l, w, h, clearance = 0.4, finger = 0) {
     pocket_rect(l, w, h, clearance = clearance, finger = finger);
 }
 
-// mřížka malých kapes (piny, osičky, kolíky)
+// grid of small pockets (pins, shafts, standoffs)
 module pocket_grid(nx, ny, d, h, pitch = 12.7, clearance = 0.35, r = 0) {
     for (i = [0 : nx - 1], j = [0 : ny - 1])
         translate([(i - (nx - 1) / 2) * pitch, (j - (ny - 1) / 2) * pitch, 0])
             cylinder(d = d + clearance, h = h + 0.2);
 }
 
-// ── popisky ──────────────────────────────────────────────────────────────────
+// ── labels ───────────────────────────────────────────────────────────────────
 module label_text(txt, size = 4.5, depth = 0.6, font = "Liberation Sans:style=Bold") {
     translate([0, 0, -depth]) linear_extrude(height = depth + 0.01) text(txt, size = size, halign = "center", valign = "center");
 }

@@ -1,28 +1,29 @@
-# Kufry, biny a boxy, do kterých se vložky vkládají.
-# Vnitřní rozměry je NUTNÉ změřit — výrobce je nezveřejňuje.
-# Měřit: vnitřní délka × šířka × hloubka (u dna i u okraje, bývá kónický).
+# Cases, bins and boxes the trays go into.
+# Inner dimensions MUST be measured — the manufacturer does not publish them.
+# Measure: inner length x width x depth (at the bottom and at the rim, walls often taper).
 
 - id: vex-bin-228-8231
-  nazev: "Originální storage bin VEX IQ (228-8231)"
-  typ: kufr_s_vikem
-  vnitrni: {l: null, w: null, h: null}
-  vnitrni_u_okraje: {l: null, w: null}
-  mrizka: {unita: null, okraj: 3.0}
-  stav: k_mereni
-  poznamka: >
-    Kufr, který byl u sad (vejde se do něj i Chromebook). Uvnitř je vyjímatelný
-    tác. Změřit obojí: vnější kufr i tác (tác bude nejspíš nosič vložek).
+  name: "VEX IQ storage bin (228-8231)"
+  kind: case_with_lid
+  inner: {l: null, w: null, h: null}
+  inner_at_rim: {l: null, w: null}
+  grid: {unit: null, margin: 3.0}
+  status: needs_measure
+  note: >
+    The bin that came with the kits (a Chromebook fits inside too). There is a
+    removable tray inside. Measure both: the bin and the tray (the tray will
+    most likely carry the inserts).
 
-- id: vex-tray-uvnitr-binu
-  nazev: "Vyjímatelný tác z binu"
-  typ: tac
-  vnitrni: {l: null, w: null, h: null}
-  stav: k_mereni
+- id: vex-tray-inside-bin
+  name: "Removable tray from the bin"
+  kind: tray
+  inner: {l: null, w: null, h: null}
+  status: needs_measure
 
 - id: gridfinity-baseplate-6x4
-  nazev: "Gridfinity baseplate 6×4 (referenční, do šuplíku)"
-  typ: gridfinity_baseplate
-  mrizka: {unita: 42.0, okraj: 0.0}
-  vnitrni: {l: 252.0, w: 168.0, h: null}
-  stav: spec
-  poznamka: "252 × 168 mm = 6 × 4 buňky; socket 0.7/1.8/2.15 mm nad 0.35 mm mezerou"
+  name: "Gridfinity baseplate 6x4 (reference, for a drawer)"
+  kind: gridfinity_baseplate
+  grid: {unit: 42.0, margin: 0.0}
+  inner: {l: 252.0, w: 168.0, h: null}
+  status: spec
+  note: "252 x 168 mm = 6 x 4 cells; socket profile 0.7/1.8/2.15 mm over a 0.35 mm gap"

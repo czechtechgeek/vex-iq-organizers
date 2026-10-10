@@ -8,7 +8,7 @@ Vzniklo pro školní sbírku 14 sad VEX IQ a několik herních sad, kde se díly
 míchají. Pokud učíš robotiku a máš ten samý problém, tohle je pro tebe.
 
 > **Stav projektu:** 🚧 rozpracováno — hotová kostra, katalog dílů a ověřený Gridfinity základ.
-> Detaily a fáze: [`docs/plan.md`](docs/plan.md)
+> Detaily a fáze: [`docs/plan.md`](docs/plan.md) (plán je anglicky, kód a dokumentace taky)
 
 ---
 
@@ -27,7 +27,7 @@ míchají. Pokud učíš robotiku a máš ten samý problém, tohle je pro tebe.
 ## Rychlý start
 
 ```bash
-git clone https://github.com/<user>/vex-iq-organizers
+git clone https://github.com/czechtechgeek/vex-iq-organizers
 cd vex-iq-organizers
 pip install -r requirements.txt
 
@@ -36,7 +36,7 @@ python3 tools/catalog.py report            # co je hotové, co čeká na měřen
 
 # vygenerovat vložku (OpenSCAD musí být v PATH)
 export OPENSCADPATH=$PWD/scad/lib
-openscad -o fit_3x2x3.stl scad/examples/fit_test_3x2x3.scad
+openscad --export-format=binstl -o fit_3x2x3.stl scad/examples/fit_test_3x2x3.scad
 ```
 
 ## Struktura
@@ -46,7 +46,7 @@ catalog/    parts.yaml (rozměry dílů), kits.yaml (co je v sadě), cases.yaml 
 scad/lib/   gf.scad — Gridfinity základ + kapsy + popisky
 scad/       examples/ a trays/ — konkrétní vložky
 layouts/    YAML: které díly a kolik chceš poskládat (vstup pro packer)
-tools/      catalog.py (validace), měření, packer, build
+tools/      catalog.py (validace), measure.py (měření), packer, build
 tests/      pytest — invarianty geometrie a katalogu
 docs/       plán, jak měřit díly, jak přispět
 ```
@@ -62,15 +62,18 @@ docs/       plán, jak měřit díly, jak přispět
 | magnety | ⌀6 × 2 mm do děr ⌀6.5 × 2.4 mm, středy 13 mm od středu buňky |
 | šrouby | M3, ⌀3.2 mm |
 
-Ověřeno testem `tests/test_catalog.py::test_gf_spec_cisla` a vygenerovanou vložkou
+Ověřeno testem `tests/test_catalog.py::test_gf_spec_numbers` a vygenerovanou vložkou
 3×2×3U: **125.5 × 83.5 × 21.0 mm**, vodotěsná.
 
 ## Přispění nového dílu
 
-1. Změř díl šuplerou (viz [`docs/mereni-dilu.md`](docs/mereni-dilu.md)) — co měřit a co je kritické.
-2. Přidej záznam do `catalog/parts.yaml` (`stav: zmereno`).
+1. Změř díl šuplerou (viz [`docs/measuring-parts.md`](docs/measuring-parts.md)).
+2. Přidej záznam do `catalog/parts.yaml` (`status: measured`).
 3. Pokud díl patří do sady, doplň počet do `catalog/kits.yaml`.
 4. `python3 tools/catalog.py validate` + `pytest`.
+
+Měření se zapisuje i nástrojem:
+`python3 tools/measure.py set beam-1x8 101.7 12.8 6.4`
 
 ## Licence
 

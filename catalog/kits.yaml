@@ -1,12 +1,12 @@
-# Sestavy (kity) — kolik kterých dílů je v sadě.
-# Zdroj: oficiální seznamy VEX (Super Kit 228-2500) a VEX Library.
-# POZOR: 1. a 2. generace se liší — čísla níže jsou 1. gen (Super Kit / Classroom Bundle).
+# Kits — how many of each part a set contains.
+# Source: official VEX part lists (Super Kit 228-2500) and the VEX Library.
+# NOTE: 1st and 2nd generation differ; the numbers below are 1st gen.
 
 - id: super-kit-1g
-  nazev: "VEX IQ Super Kit (1. gen)"
-  cislo_dilu: "228-2500"
-  poznamka: "v Classroom Bundle je 12× Super Kit"
-  dily:
+  name: "VEX IQ Super Kit (1st gen)"
+  part_number: "228-2500"
+  note: "a Classroom Bundle contains 12 of these"
+  parts:
     beam-1x3: 2
     beam-1x4: 6
     beam-1x6: 6
@@ -24,13 +24,13 @@
     plate-4x4: 4
     plate-4x12: 2
     beam-tee-3x4: 4
-    beam-pravy-2x3: 4
-    beam-uhel-3x3-30: 4
-    beam-uhel-3x3-45: 4
-    beam-uhel-3x3-60: 4
-    beam-pravy-3x5: 4
+    beam-right-2x3: 4
+    beam-angle-3x3-30: 4
+    beam-angle-3x3-45: 4
+    beam-angle-3x3-60: 4
+    beam-right-3x5: 4
     beam-offset-4x4: 4
-    plate-anchor-gumicky: 2
+    plate-band-anchor: 2
     pin-1x1: 240
     pin-1x2: 60
     pin-2x2: 20
@@ -60,13 +60,13 @@
     tire-200: 4
 
 - id: super-kit-2g
-  nazev: "VEX IQ Super Kit (2. gen, 228-7755)"
-  poznamka: "doplnit po přečtení oficiálního seznamu 2. gen — liší se hlavně piny a barvami"
-  dily: {}
+  name: "VEX IQ Super Kit (2nd gen, 228-7755)"
+  note: "fill in from the official 2nd gen list — pins and colours differ"
+  parts: {}
 
 - id: classroom-12
-  nazev: "VEX IQ Classroom Bundle (12× Super Kit)"
-  poznamka: "ve škole 14 sad → 12 v bundle + 2 jiné; upravit podle skutečnosti"
-  dily:
-    # dopočítá se jako 12× super-kit-1g
-    _vzorec: "12 * super-kit-1g"
+  name: "VEX IQ Classroom Bundle (12x Super Kit)"
+  note: "school owns 14 sets -> 12 in the bundle + 2 others; adjust to reality"
+  parts:
+    # computed as 12x super-kit-1g
+    _formula: "12 * super-kit-1g"
