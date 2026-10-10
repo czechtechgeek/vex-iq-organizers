@@ -26,14 +26,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Instalace OpenSCAD
-        run: sudo apt-get update && sudo apt-get install -y openscad
+        run: sudo apt-get update && sudo apt-get install -y openscad xvfb
       - name: Vykreslit referenční vložku
         run: |
           export OPENSCADPATH=$PWD/scad/lib
           mkdir -p out
-          openscad -o out/fit_3x2x3.stl scad/examples/fit_test_3x2x3.scad
-          openscad -o out/fit_3x2x3.png --camera=0,0,0,55,0,25,0 --viewall --autocenter \
-            --imgsize=1000,700 scad/examples/fit_test_3x2x3.scad
+          openscad --export-format=binstl -o out/fit_3x2x3.stl scad/examples/fit_test_3x2x3.scad
+          # PNG (offscreen) na běžci bez GPU potřebuje virtuální X server
+          xvfb-run -a openscad -o out/fit_3x2x3.png --camera=0,0,0,55,0,25,0 --viewall \
+            --autocenter --imgsize=1000,700 scad/examples/fit_test_3x2x3.scad
       - name: Nahraj artefakty
         uses: actions/upload-artifact@v4
         with:
