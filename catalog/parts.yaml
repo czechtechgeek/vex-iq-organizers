@@ -1,0 +1,443 @@
+# Katalog VEX IQ dílů — rozměry v mm.
+#
+# Pravidla:
+#   pit = 12.7 mm (0.5"), tloušťka nosníku/desky = 6.35 mm (0.25")
+#   délka nosníku/desky  = pocet_der * 12.7
+#   šířka 1x = 12.7 mm, 2x = 25.4 mm (2 piny)
+#   "rozmer" je bounding box v orientaci, v jaké díl leží v kapse (l = delší strana)
+#   "stav":  odvozeno  = spočteno z pitchů (lze ověřit šuplerou)
+#            k_mereni  = nutno změřit, rozměr je odhad nebo null
+#            zmereno   = ověřeno šuplerou (doplní se datem)
+#
+# Po měření se doplní: presne: {l: .., w: .., h: ..} a stav: zmereno
+
+- id: beam-1x3
+  nazev: "1x3 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-002"
+  pocet_der: 3
+  rozmer: {l: 38.1, w: 12.7, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: beam-1x4
+  nazev: "1x4 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-003"
+  pocet_der: 4
+  rozmer: {l: 50.8, w: 12.7, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: beam-1x6
+  nazev: "1x6 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-005"
+  pocet_der: 6
+  rozmer: {l: 76.2, w: 12.7, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: beam-1x8
+  nazev: "1x8 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-007"
+  pocet_der: 8
+  rozmer: {l: 101.6, w: 12.7, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: beam-1x10
+  nazev: "1x10 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-009"
+  pocet_der: 10
+  rozmer: {l: 127.0, w: 12.7, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: beam-1x12
+  nazev: "1x12 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-011"
+  pocet_der: 12
+  rozmer: {l: 152.4, w: 12.7, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: beam-2x2
+  nazev: "2x2 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-017"
+  pocet_der: 2
+  rozmer: {l: 25.4, w: 25.4, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: hnízdo
+
+- id: beam-2x4
+  nazev: "2x4 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-019"
+  pocet_der: 4
+  rozmer: {l: 50.8, w: 25.4, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: beam-2x6
+  nazev: "2x6 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-021"
+  pocet_der: 6
+  rozmer: {l: 76.2, w: 25.4, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: beam-2x8
+  nazev: "2x8 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-023"
+  pocet_der: 8
+  rozmer: {l: 101.6, w: 25.4, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: beam-2x10
+  nazev: "2x10 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-025"
+  pocet_der: 10
+  rozmer: {l: 127.0, w: 25.4, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: beam-2x12
+  nazev: "2x12 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-026"
+  pocet_der: 12
+  rozmer: {l: 152.4, w: 25.4, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: beam-2x16
+  nazev: "2x16 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-028"
+  pocet_der: 16
+  rozmer: {l: 203.2, w: 25.4, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: beam-2x20
+  nazev: "2x20 Beam"
+  kategorie: beam
+  cislo_dilu: "228-2500-030"
+  pocet_der: 20
+  rozmer: {l: 254.0, w: 25.4, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: plate-4x4
+  nazev: "4x4 Plate"
+  kategorie: plate
+  cislo_dilu: "228-2500-040"
+  pocet_der: 4
+  rozmer: {l: 50.8, w: 50.8, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: hnízdo
+
+- id: plate-4x12
+  nazev: "4x12 Plate"
+  kategorie: plate
+  cislo_dilu: "228-2500-045"
+  pocet_der: 12
+  rozmer: {l: 152.4, w: 50.8, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: hnízdo
+
+- id: beam-tee-3x4
+  nazev: "3x4 Tee Beam"
+  kategorie: beam_uhlovy
+  cislo_dilu: "228-2500-144"
+  rozmer: {l: 50.8, w: 38.1, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: hnízdo
+
+- id: beam-pravy-2x3
+  nazev: "2x3 Right Angle Beam"
+  kategorie: beam_uhlovy
+  cislo_dilu: "228-2500-145"
+  rozmer: {l: 38.1, w: 25.4, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: hnízdo
+
+- id: beam-uhel-3x3-30
+  nazev: "3x3 30° Angle Beam"
+  kategorie: beam_uhlovy
+  cislo_dilu: "228-2500-147"
+  rozmer: {l: 38.1, w: 38.1, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: hnízdo
+
+- id: beam-uhel-3x3-45
+  nazev: "3x3 45° Angle Beam"
+  kategorie: beam_uhlovy
+  cislo_dilu: "228-2500-148"
+  rozmer: {l: 38.1, w: 38.1, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: hnízdo
+
+- id: beam-uhel-3x3-60
+  nazev: "3x3 60° Angle Beam"
+  kategorie: beam_uhlovy
+  cislo_dilu: "228-2500-149"
+  rozmer: {l: 38.1, w: 38.1, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: hnízdo
+
+- id: beam-pravy-3x5
+  nazev: "3x5 Right Angle Beam"
+  kategorie: beam_uhlovy
+  cislo_dilu: "228-2500-150"
+  rozmer: {l: 63.5, w: 38.1, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: hnízdo
+
+- id: beam-offset-4x4
+  nazev: "4x4 Right Angle Offset Beam"
+  kategorie: beam_uhlovy
+  cislo_dilu: "228-2500-151"
+  rozmer: {l: 50.8, w: 50.8, h: 6.35}
+  stav: odvozeno
+  kapsa_doporucena: hnízdo
+
+- id: plate-anchor-gumicky
+  nazev: "Elastic Band Anchor Plate"
+  kategorie: doplnek
+  cislo_dilu: "228-2500-157"
+  rozmer: {l: null, w: null, h: null}
+  stav: k_mereni
+  kapsa_doporucena: hnízdo
+
+# ── piny a spojky ──────────────────────────────────────────────────────────
+- id: pin-1x1
+  nazev: "Connector Pin 1x1"
+  kategorie: pin
+  cislo_dilu: "228-2500-060"
+  rozmer: {l: 12.7, w: 8.0, h: 8.0}
+  stav: odvozeno
+  poznamka: "průměr hlavy a těla změřit; délka = 1 pitch"
+  kapsa_doporucena: mřížka
+
+- id: pin-1x2
+  nazev: "Connector Pin 1x2"
+  kategorie: pin
+  cislo_dilu: "228-2500-061"
+  rozmer: {l: 25.4, w: 8.0, h: 8.0}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: pin-2x2
+  nazev: "Connector Pin 2x2"
+  kategorie: pin
+  cislo_dilu: "228-2500-062"
+  rozmer: {l: null, w: null, h: null}
+  stav: k_mereni
+  kapsa_doporucena: hnízdo
+
+- id: pin-idler-1x1
+  nazev: "1x1 Idler Pin"
+  kategorie: pin
+  cislo_dilu: "228-2500-073"
+  rozmer: {l: 12.7, w: 8.0, h: 8.0}
+  stav: odvozeno
+  kapsa_doporucena: mřížka
+
+- id: pin-idler-0x2
+  nazev: "0x2 Idler Pin"
+  kategorie: pin
+  cislo_dilu: "228-2500-084"
+  rozmer: {l: 25.4, w: 8.0, h: 8.0}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: standoff-0.5
+  nazev: "Standoff 1/2 Pitch"
+  kategorie: standoff
+  cislo_dilu: "228-2500-064"
+  rozmer: {l: 6.35, w: 8.0, h: 8.0}
+  stav: odvozeno
+  kapsa_doporucena: mřížka
+
+- id: standoff-1
+  nazev: "Standoff 1 Pitch"
+  kategorie: standoff
+  cislo_dilu: "228-2500-065"
+  rozmer: {l: 12.7, w: 8.0, h: 8.0}
+  stav: odvozeno
+  kapsa_doporucena: mřížka
+
+- id: standoff-2
+  nazev: "Standoff 2 Pitch"
+  kategorie: standoff
+  cislo_dilu: "228-2500-067"
+  rozmer: {l: 25.4, w: 8.0, h: 8.0}
+  stav: odvozeno
+  kapsa_doporucena: mřížka
+
+- id: standoff-4
+  nazev: "Standoff 4 Pitch"
+  kategorie: standoff
+  cislo_dilu: "228-2500-070"
+  rozmer: {l: 50.8, w: 8.0, h: 8.0}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+- id: standoff-6
+  nazev: "Standoff 6 Pitch"
+  kategorie: standoff
+  cislo_dilu: "228-2500-072"
+  rozmer: {l: 76.2, w: 8.0, h: 8.0}
+  stav: odvozeno
+  kapsa_doporucena: kanál
+
+# ── osičky (shafts) ────────────────────────────────────────────────────────
+- id: shaft-2x
+  nazev: "2x Pitch Plastic Shaft"
+  kategorie: shaft
+  cislo_dilu: "228-2500-074"
+  rozmer: {l: 25.4, w: 4.9, h: 4.9}
+  stav: k_mereni
+  poznamka: "délka z pitchů, průřez změřit (čtvercový profil)"
+  kapsa_doporucena: kanál
+
+- id: shaft-3x
+  nazev: "3x Pitch Plastic Shaft"
+  kategorie: shaft
+  cislo_dilu: "228-2500-075"
+  rozmer: {l: 38.1, w: 4.9, h: 4.9}
+  stav: k_mereni
+  kapsa_doporucena: kanál
+
+- id: shaft-4x
+  nazev: "4x Pitch Shaft / Plastic Shaft"
+  kategorie: shaft
+  cislo_dilu: "228-2500-076"
+  rozmer: {l: 50.8, w: 4.9, h: 4.9}
+  stav: k_mereni
+  kapsa_doporucena: kanál
+
+- id: shaft-5x
+  nazev: "5x Pitch Plastic Shaft"
+  kategorie: shaft
+  cislo_dilu: "228-2500-077"
+  rozmer: {l: 63.5, w: 4.9, h: 4.9}
+  stav: k_mereni
+  kapsa_doporucena: kanál
+
+- id: shaft-6x
+  nazev: "6x Pitch Shaft"
+  kategorie: shaft
+  cislo_dilu: "228-2500-122"
+  rozmer: {l: 76.2, w: 4.9, h: 4.9}
+  stav: k_mereni
+  kapsa_doporucena: kanál
+
+- id: shaft-8x
+  nazev: "8x Pitch Shaft"
+  kategorie: shaft
+  cislo_dilu: "228-2500-124"
+  rozmer: {l: 101.6, w: 4.9, h: 4.9}
+  stav: k_mereni
+  kapsa_doporucena: kanál
+
+- id: washer
+  nazev: "Washer"
+  kategorie: drobne
+  cislo_dilu: "228-2500-112"
+  rozmer: {l: null, w: null, h: null}
+  stav: k_mereni
+  kapsa_doporucena: mřížka
+
+- id: spacer-0.5
+  nazev: "0.5x Pitch Spacer"
+  kategorie: drobne
+  cislo_dilu: "228-2500-114"
+  rozmer: {l: 6.35, w: 6.0, h: 6.0}
+  stav: k_mereni
+  kapsa_doporucena: mřížka
+
+- id: shaft-bushing
+  nazev: "Shaft Bushing"
+  kategorie: drobne
+  cislo_dilu: "228-2500-125"
+  rozmer: {l: null, w: null, h: null}
+  stav: k_mereni
+  kapsa_doporucena: mřížka
+
+- id: shaft-collar
+  nazev: "Rubber Shaft Collar"
+  kategorie: drobne
+  cislo_dilu: "228-2500-143"
+  rozmer: {l: null, w: null, h: null}
+  stav: k_mereni
+  kapsa_doporucena: mřížka
+
+# ── ozubená kola ───────────────────────────────────────────────────────────
+- id: gear-12t
+  nazev: "12 Tooth Gear"
+  kategorie: gear
+  cislo_dilu: "228-2500-213"
+  rozmer: {l: null, w: null, h: null}
+  stav: k_mereni
+  poznamka: "změřit vnější průměr a tloušťku"
+  kapsa_doporucena: hnízdo
+
+- id: gear-36t
+  nazev: "36 Tooth Gear"
+  kategorie: gear
+  cislo_dilu: "228-2500-214"
+  rozmer: {l: null, w: null, h: null}
+  stav: k_mereni
+  kapsa_doporucena: hnízdo
+
+- id: gear-60t
+  nazev: "60 Tooth Gear"
+  kategorie: gear
+  cislo_dilu: "228-2500-215"
+  rozmer: {l: null, w: null, h: null}
+  stav: k_mereni
+  kapsa_doporucena: hnízdo
+
+- id: gear-crown-36t
+  nazev: "36 Tooth Crown Gear"
+  kategorie: gear
+  cislo_dilu: "228-2500-218"
+  rozmer: {l: null, w: null, h: null}
+  stav: k_mereni
+  kapsa_doporucena: hnízdo
+
+# ── kola ───────────────────────────────────────────────────────────────────
+- id: hub-44
+  nazev: "Small Wheel Hub 44 mm"
+  kategorie: wheel
+  cislo_dilu: "228-2500-208"
+  rozmer: {l: 44.0, w: null, h: null}
+  stav: k_mereni
+  kapsa_doporucena: hnízdo
+
+- id: tire-100
+  nazev: "100 mm Travel Rubber Tire"
+  kategorie: wheel
+  cislo_dilu: "228-2500-207"
+  rozmer: {l: 100.0, w: null, h: null}
+  stav: k_mereni
+  kapsa_doporucena: hnízdo
+
+- id: tire-200
+  nazev: "200 mm Travel Rubber Tire"
+  kategorie: wheel
+  cislo_dilu: "228-2500-209"
+  rozmer: {l: 200.0, w: null, h: null}
+  stav: k_mereni
+  kapsa_doporucena: hnízdo

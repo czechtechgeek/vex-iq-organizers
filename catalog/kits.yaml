@@ -1,0 +1,72 @@
+# Sestavy (kity) — kolik kterých dílů je v sadě.
+# Zdroj: oficiální seznamy VEX (Super Kit 228-2500) a VEX Library.
+# POZOR: 1. a 2. generace se liší — čísla níže jsou 1. gen (Super Kit / Classroom Bundle).
+
+- id: super-kit-1g
+  nazev: "VEX IQ Super Kit (1. gen)"
+  cislo_dilu: "228-2500"
+  poznamka: "v Classroom Bundle je 12× Super Kit"
+  dily:
+    beam-1x3: 2
+    beam-1x4: 6
+    beam-1x6: 6
+    beam-1x8: 8
+    beam-1x10: 6
+    beam-1x12: 4
+    beam-2x2: 4
+    beam-2x4: 6
+    beam-2x6: 6
+    beam-2x8: 6
+    beam-2x10: 4
+    beam-2x12: 6
+    beam-2x16: 4
+    beam-2x20: 2
+    plate-4x4: 4
+    plate-4x12: 2
+    beam-tee-3x4: 4
+    beam-pravy-2x3: 4
+    beam-uhel-3x3-30: 4
+    beam-uhel-3x3-45: 4
+    beam-uhel-3x3-60: 4
+    beam-pravy-3x5: 4
+    beam-offset-4x4: 4
+    plate-anchor-gumicky: 2
+    pin-1x1: 240
+    pin-1x2: 60
+    pin-2x2: 20
+    standoff-0.5: 12
+    standoff-1: 12
+    standoff-2: 14
+    standoff-4: 6
+    standoff-6: 6
+    pin-idler-1x1: 6
+    pin-idler-0x2: 6
+    shaft-4x: 2
+    shaft-6x: 4
+    shaft-8x: 2
+    shaft-2x: 2
+    shaft-3x: 2
+    shaft-5x: 2
+    washer: 20
+    spacer-0.5: 25
+    shaft-bushing: 4
+    shaft-collar: 30
+    gear-12t: 10
+    gear-36t: 10
+    gear-60t: 6
+    gear-crown-36t: 2
+    hub-44: 4
+    tire-100: 2
+    tire-200: 4
+
+- id: super-kit-2g
+  nazev: "VEX IQ Super Kit (2. gen, 228-7755)"
+  poznamka: "doplnit po přečtení oficiálního seznamu 2. gen — liší se hlavně piny a barvami"
+  dily: {}
+
+- id: classroom-12
+  nazev: "VEX IQ Classroom Bundle (12× Super Kit)"
+  poznamka: "ve škole 14 sad → 12 v bundle + 2 jiné; upravit podle skutečnosti"
+  dily:
+    # dopočítá se jako 12× super-kit-1g
+    _vzorec: "12 * super-kit-1g"

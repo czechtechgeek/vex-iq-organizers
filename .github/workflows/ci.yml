@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalace závislostí
+        run: pip install -r requirements.txt
+      - name: Kontrola katalogu
+        run: python3 tools/catalog.py validate
+      - name: Testy
+        run: pytest -q
+
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalace OpenSCAD
+        run: sudo apt-get update && sudo apt-get install -y openscad
+      - name: Vykreslit referenční vložku
+        run: |
+          export OPENSCADPATH=$PWD/scad/lib
+          mkdir -p out
+          openscad -o out/fit_3x2x3.stl scad/examples/fit_test_3x2x3.scad
+          openscad -o out/fit_3x2x3.png --camera=0,0,0,55,0,25,0 --viewall --autocenter \
+            --imgsize=1000,700 scad/examples/fit_test_3x2x3.scad
+      - name: Nahraj artefakty
+        uses: actions/upload-artifact@v4
+        with:
+          name: vygenerovane-modely
+          path: out/

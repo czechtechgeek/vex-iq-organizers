@@ -1,0 +1,28 @@
+# Kufry, biny a boxy, do kterých se vložky vkládají.
+# Vnitřní rozměry je NUTNÉ změřit — výrobce je nezveřejňuje.
+# Měřit: vnitřní délka × šířka × hloubka (u dna i u okraje, bývá kónický).
+
+- id: vex-bin-228-8231
+  nazev: "Originální storage bin VEX IQ (228-8231)"
+  typ: kufr_s_vikem
+  vnitrni: {l: null, w: null, h: null}
+  vnitrni_u_okraje: {l: null, w: null}
+  mrizka: {unita: null, okraj: 3.0}
+  stav: k_mereni
+  poznamka: >
+    Kufr, který byl u sad (vejde se do něj i Chromebook). Uvnitř je vyjímatelný
+    tác. Změřit obojí: vnější kufr i tác (tác bude nejspíš nosič vložek).
+
+- id: vex-tray-uvnitr-binu
+  nazev: "Vyjímatelný tác z binu"
+  typ: tac
+  vnitrni: {l: null, w: null, h: null}
+  stav: k_mereni
+
+- id: gridfinity-baseplate-6x4
+  nazev: "Gridfinity baseplate 6×4 (referenční, do šuplíku)"
+  typ: gridfinity_baseplate
+  mrizka: {unita: 42.0, okraj: 0.0}
+  vnitrni: {l: 252.0, w: 168.0, h: null}
+  stav: spec
+  poznamka: "252 × 168 mm = 6 × 4 buňky; socket 0.7/1.8/2.15 mm nad 0.35 mm mezerou"

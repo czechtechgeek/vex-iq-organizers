@@ -1,0 +1,12 @@
+# Herní elementy (VIQRC) — až ve fázi 5.
+# Herní elementy bývají velké a nepravidelné → většinou ne kapsa na míru,
+# ale „podnos na hromadu" s pevným dnem a ohrádkou.
+#
+# U každé hry doplnit: název sezóny, soupis elementů, rozměry (změřit nebo
+# z oficiálního CAD pole: vexrobotics.com/iq/downloads/cad-snapcad).
+
+- id: hra-1
+  nazev: "DOPLNIT název hry"
+  sezona: null
+  elementy: []
+  stav: k_doplneni
