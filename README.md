@@ -24,6 +24,8 @@ míchají. Pokud učíš robotiku a máš ten samý problém, tohle je pro tebe.
 | 5 | Vložky na míru do kufru + tisková kampaň pro 14 sad | ⬜ plánováno |
 | 6 | Import rozměrů z oficiálních STEP CAD od VEX | ⬜ plánováno |
 
+**Hotové modely:** [MODELS.md](MODELS.md) — generovaný katalog (stav, rozměry, hmotnost, kolik vytištěno).
+
 ## Rychlý start
 
 ```bash
