@@ -487,3 +487,57 @@
   size: {l: null, w: null, h: null}
   status: needs_measure
   suggested_pocket: cell
+
+# ── electronics: brain, controller, battery ──────────────────────────────────
+# The 1st gen Brain size is official (VEX: 4.2 x 3.0 x 1.64 in, with battery).
+# VEX publishes no sizes for the 2nd gen electronics — measure them, or take
+# them from the STEP CAD (vexrobotics.com/iq/downloads/cad-snapcad).
+- id: brain-1g
+  name: "Robot Brain (1st generation)"
+  category: electronics
+  part_number: "228-2540"
+  size: {l: 106.7, w: 76.2, h: 41.7}
+  status: spec
+  suggested_pocket: holder
+  note: "official size, battery installed (4.2 x 3.0 x 1.64 in)"
+
+- id: brain-2g
+  name: "Robot Brain (2nd generation)"
+  category: electronics
+  part_number: "228-6480"
+  size: {l: null, w: null, h: null}
+  status: needs_measure
+  suggested_pocket: holder
+  note: "1.0 lbs, no published size"
+
+- id: controller-1g
+  name: "Controller (1st generation)"
+  category: electronics
+  part_number: "228-2530"
+  size: {l: null, w: null, h: null}
+  status: needs_measure
+  suggested_pocket: holder
+
+- id: controller-2g
+  name: "Controller (2nd generation)"
+  category: electronics
+  part_number: "228-6470"
+  size: {l: null, w: null, h: null}
+  status: needs_measure
+  suggested_pocket: holder
+
+- id: battery-1g
+  name: "Robot Battery (Ni-MH 2000 mAh, 1st generation)"
+  category: electronics
+  part_number: "228-2604"
+  size: {l: null, w: null, h: null}
+  status: needs_measure
+  suggested_pocket: holder
+
+- id: battery-2g
+  name: "Robot Battery (Li-Ion 2000 mAh, 2nd generation)"
+  category: electronics
+  part_number: "228-7045"
+  size: {l: null, w: null, h: null}
+  status: needs_measure
+  suggested_pocket: holder

@@ -26,7 +26,7 @@ import catalog  # noqa: E402
 MANIFEST = BASE / "catalog" / "models.yaml"
 OUT_MD = BASE / "MODELS.md"
 
-KINDS = {"gridfinity_tray", "case_insert", "baseplate", "accessory"}
+KINDS = {"gridfinity_tray", "case_insert", "baseplate", "accessory", "holder"}
 STATUSES = {"draft", "verified", "printed"}
 STATUS_ICON = {"draft": "draft", "verified": "verified", "printed": "printed"}
 

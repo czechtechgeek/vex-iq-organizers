@@ -161,6 +161,26 @@ module gf_dividers(nx, ny, px, py, h, wall = 1.2, grip = 0) {
     }
 }
 
+// ── fitted frame (holder for a bulky item) ───────────────────────────────────
+// Walls ADDED around a part lying on the cavity floor, so it cannot slide.
+// (Same lesson as with dividers: a subtracted "pocket" inside an open cavity
+// removes nothing.) clear = clearance per side, wall = frame thickness,
+// h = frame height above the floor, finger = grip gap across the middle.
+module gf_frame(l, w, h, clear = 1.5, wall = 2.0, finger = 0, r = 2.0) {
+    outer_l = l + 2 * clear + 2 * wall;
+    outer_w = w + 2 * clear + 2 * wall;
+    translate([0, 0, HEIGHT_U])
+        difference() {
+            linear_extrude(height = h)
+                offset(r = r) square([outer_l - 2 * r, outer_w - 2 * r], center = true);
+            translate([0, 0, -0.1]) linear_extrude(height = h + 0.2)
+                offset(r = r) square([l + 2 * clear - 2 * r, w + 2 * clear - 2 * r], center = true);
+            if (finger > 0)
+                translate([-outer_l / 2 - 0.1, -finger / 2, -0.1])
+                    cube([outer_l + 0.2, finger, h + 0.2]);
+        }
+}
+
 // ── main module: tray / bin ──────────────────────────────────────────────────
 module gf_tray(nx, ny, h_u,
                wall = WALL_DEF, floor = FLOOR_DEF,

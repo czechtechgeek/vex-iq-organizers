@@ -56,6 +56,40 @@
   preview: docs/img/sensor_tray_large.png
   note: "6 compartments of two grid cells each (~82 x 40 mm) — for the bigger sensors. Print file: print/sensor_tray_4x3_6p.stl. Build: scad.py build scad/examples/sensor_tray.scad --name sensor_tray_4x3_6p --set NX=4 --set NY=3 --set H_U=5 --set PX=2 --set PY=3 --set DIV_WALL=2."
 
+- id: holder-brain-1g
+  name: "Brain holder 3x3 (1st gen)"
+  scad: scad/examples/holder.scad
+  kind: holder
+  cells: {x: 3, y: 3}
+  height_u: 5
+  size_mm: {x: 125.5, y: 125.5, z: 35.0}
+  weight_g: 96
+  pockets:
+    - {type: frame, count: 1, parts: [brain-1g]}
+  parts_covered:
+    brain-1g: 1
+  status: verified
+  prints: 0
+  preview: docs/img/holder_brain_1g.png
+  note: "Fitted frame for the 1st gen Robot Brain (official size 106.7 x 76.2 x 41.7 mm with battery). Frame 18 mm high with a 30 mm grip gap. Build: scad.py build scad/examples/holder.scad --name holder_brain_1g --set NX=3 --set NY=3 --set H_U=5 --set FRAME_H=18 --set FINGER=30."
+
+- id: holder-battery-3x2
+  name: "Battery holder 3x2 (prototype)"
+  scad: scad/examples/holder.scad
+  kind: holder
+  cells: {x: 3, y: 2}
+  height_u: 4
+  size_mm: {x: 125.5, y: 83.5, z: 28.0}
+  weight_g: 61
+  pockets:
+    - {type: frame, count: 1, parts: [battery-2g]}
+  parts_covered:
+    battery-2g: 1
+  status: draft
+  prints: 0
+  preview: docs/img/holder_battery.png
+  note: "Prototype only — the item size (95 x 60 x 25 mm) is a PLACEHOLDER until the battery is measured. Same file handles the controller and the 2nd gen brain."
+
 - id: gridfinity-baseplate-6x4
   name: "Gridfinity baseplate 6x4"
   scad: null

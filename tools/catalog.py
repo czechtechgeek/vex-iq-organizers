@@ -22,7 +22,7 @@ PITCH = 12.7          # mm, VEX IQ
 THICK = 6.35          # mm, beam/plate thickness (0.25")
 STATUSES = {"derived", "needs_measure", "measured", "spec"}
 CATEGORIES = {"beam", "angle_beam", "plate", "pin", "standoff", "shaft",
-              "gear", "wheel", "small_part", "accessory", "sensor"}
+              "gear", "wheel", "small_part", "accessory", "sensor", "electronics"}
 
 
 def load(name: str):
