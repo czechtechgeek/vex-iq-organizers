@@ -90,6 +90,39 @@
   preview: docs/img/holder_battery.png
   note: "Prototype only — the item size (95 x 60 x 25 mm) is a PLACEHOLDER until the battery is measured. Same file handles the controller and the 2nd gen brain."
 
+- id: rack-brain-upright-4x3
+  name: "Brain rack 4x3 — 3 brains upright"
+  scad: scad/examples/rack.scad
+  kind: holder
+  cells: {x: 4, y: 3}
+  height_u: null
+  size_mm: {x: 167.5, y: 125.5, z: 47.0}
+  weight_g: 155
+  pockets:
+    - {type: slot_rack, count: 3, parts: [brain-1g]}
+  parts_covered:
+    brain-1g: 3
+  status: verified
+  prints: 0
+  preview: docs/img/rack_brain_upright.png
+  note: "Three 1st gen Brains standing on edge (slot 44.7 x 109.7 mm, walls 40 mm, 10 mm front lip). 3 brains per tray instead of 1 lying flat — about 4x less drawer area. Build: scad.py build scad/examples/rack.scad --name rack_brain_upright --set NX=4 --set NY=3 --set H_U=3 --set N_SLOTS=3 --set ITEM_L=106.7 --set ITEM_T=41.7 --set ITEM_H=76.2 --set SLOT_H=40"
+
+- id: rack-controller-upright-4x3
+  name: "Controller rack 4x3 — 2 controllers upright (prototype)"
+  scad: scad/examples/rack.scad
+  kind: holder
+  cells: {x: 4, y: 3}
+  height_u: null
+  size_mm: {x: 167.5, y: 125.5, z: 77.0}
+  weight_g: 177
+  pockets:
+    - {type: slot_rack, count: 2, parts: [controller-2g]}
+  parts_covered: {}
+  status: draft
+  prints: 0
+  preview: docs/img/rack_controller_upright.png
+  note: "Prototype — the controller size (110 x 60 x 110 mm) is a PLACEHOLDER until measured. Slot 63 x 113 mm, walls 70 mm. Set ITEM_L/T/H and N_SLOTS once measured."
+
 - id: gridfinity-baseplate-6x4
   name: "Gridfinity baseplate 6x4"
   scad: null

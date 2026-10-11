@@ -181,6 +181,35 @@ module gf_frame(l, w, h, clear = 1.5, wall = 2.0, finger = 0, r = 2.0) {
         }
 }
 
+// ── upright slot rack ────────────────────────────────────────────────────────
+// Items stand on edge like books on a shelf — this is where the space saving
+// comes from (3 brains or 2 controllers per tray instead of 1). The walls lean
+// back by `lean` degrees so the item rests against the back wall, and a low
+// front lip stops it sliding out. Sits on the tray floor (z = 7 mm).
+module gf_slant_wall(th, d, h, shift) {
+    // rotate -90 about y so the polygon's first axis becomes +z (walls go UP)
+    rotate([0, -90, 0])
+        linear_extrude(height = th, center = true)
+            polygon([[0, -d / 2], [h, -d / 2 + shift], [h, d / 2 + shift], [0, d / 2]]);
+}
+
+module gf_slot_rack(n, slot_w, slot_d, slot_h,
+                    wall = 2.0, lean = 10, lip_h = 10, lip_t = 2.0) {
+    pitch = slot_w + wall;
+    total = n * pitch + wall;
+    shift = slot_h * tan(lean);
+    // side walls (n + 1)
+    for (i = [0 : n])
+        translate([-total / 2 + i * pitch + wall / 2, 0, HEIGHT_U])
+            gf_slant_wall(wall, slot_d, slot_h, shift);
+    // back wall the items lean against
+    translate([0, slot_d / 2 + wall / 2, HEIGHT_U])
+        gf_slant_wall(total, wall, slot_h, shift);
+    // front lip
+    translate([0, -slot_d / 2 - lip_t / 2, HEIGHT_U + lip_h / 2])
+        cube([total, lip_t, lip_h], center = true);
+}
+
 // ── main module: tray / bin ──────────────────────────────────────────────────
 module gf_tray(nx, ny, h_u,
                wall = WALL_DEF, floor = FLOOR_DEF,
