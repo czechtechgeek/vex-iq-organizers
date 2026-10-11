@@ -31,14 +31,14 @@
   cells: {x: 4, y: 4}
   height_u: 5
   size_mm: {x: 167.5, y: 167.5, z: 35.0}
-  weight_g: 173
+  weight_g: 199
   pockets:
     - {type: divider_grid, count: 16}
   parts_covered: {}
   status: verified
   prints: 0
   preview: docs/img/sensor_tray_small.png
-  note: "16 compartments of one grid cell each (~40 x 40 mm) — for small sensors and loose parts. Build: scad.py build scad/examples/sensor_tray.scad --name sensor_small --set NX=4 --set NY=4 --set H_U=5 --set PX=4 --set PY=4. Two of these hold 32 parts, i.e. the ~30 small sensors."
+  note: "16 compartments of one grid cell each (~40 x 40 mm) — for small sensors and loose parts. Print file: print/sensor_tray_4x4_16p.stl. Build: scad.py build scad/examples/sensor_tray.scad --name sensor_tray_4x4_16p --set NX=4 --set NY=4 --set H_U=5 --set PX=4 --set PY=4 --set DIV_WALL=2. Two of these hold 32 parts, i.e. the ~30 small sensors."
 
 - id: sensor-tray-large-4x3
   name: "Sensor tray 4x3 (6 large compartments)"
@@ -47,14 +47,14 @@
   cells: {x: 4, y: 3}
   height_u: 5
   size_mm: {x: 167.5, y: 125.5, z: 35.0}
-  weight_g: 122
+  weight_g: 134
   pockets:
     - {type: divider_grid, count: 6}
   parts_covered: {}
   status: verified
   prints: 0
   preview: docs/img/sensor_tray_large.png
-  note: "6 compartments of two grid cells each (~82 x 40 mm) — for the bigger sensors. Build: scad.py build scad/examples/sensor_tray.scad --name sensor_large --set NX=4 --set NY=3 --set H_U=5 --set PX=2 --set PY=3."
+  note: "6 compartments of two grid cells each (~82 x 40 mm) — for the bigger sensors. Print file: print/sensor_tray_4x3_6p.stl. Build: scad.py build scad/examples/sensor_tray.scad --name sensor_tray_4x3_6p --set NX=4 --set NY=3 --set H_U=5 --set PX=2 --set PY=3 --set DIV_WALL=2."
 
 - id: gridfinity-baseplate-6x4
   name: "Gridfinity baseplate 6x4"
