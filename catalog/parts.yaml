@@ -442,3 +442,48 @@
   size: {l: 200.0, w: null, h: null}
   status: needs_measure
   suggested_pocket: nest
+
+# ── sensors and electronics ──────────────────────────────────────────────────
+# Sizes to be measured with calipers; "one cell" in the sensor tray means a
+# compartment of about 40 x 40 mm, "two cells" about 82 x 40 mm.
+- id: sensor-bumper
+  name: "Bumper Switch"
+  category: sensor
+  part_number: "228-2540"
+  size: {l: null, w: null, h: null}
+  status: needs_measure
+  suggested_pocket: cell
+  note: "small sensor — one cell compartment"
+
+- id: sensor-distance
+  name: "Distance Sensor"
+  category: sensor
+  part_number: "228-3010"
+  size: {l: null, w: null, h: null}
+  status: needs_measure
+  suggested_pocket: cell2
+  note: "bigger sensor with a lens — two cell compartment"
+
+- id: sensor-color
+  name: "Optical / Color Sensor"
+  category: sensor
+  part_number: "228-3011"
+  size: {l: null, w: null, h: null}
+  status: needs_measure
+  suggested_pocket: cell2
+
+- id: sensor-gyro
+  name: "Gyro / Inertial Sensor"
+  category: sensor
+  part_number: "228-3012"
+  size: {l: null, w: null, h: null}
+  status: needs_measure
+  suggested_pocket: cell
+
+- id: sensor-touch-led
+  name: "Touch LED"
+  category: sensor
+  part_number: "228-3013"
+  size: {l: null, w: null, h: null}
+  status: needs_measure
+  suggested_pocket: cell

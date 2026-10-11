@@ -124,18 +124,58 @@ module gf_lip(nx, ny, wall, top_z) {
         }
 }
 
+// ── hollow base ──────────────────────────────────────────────────────────────
+// Real Gridfinity bins have hollow feet: only a thin shell, so you do not print
+// ~140 g of solid plastic under a 4x4 tray. Subtracted from the base.
+module gf_base_hollow(nx, ny, wall = WALL_DEF) {
+    for (i = [0 : nx - 1], j = [0 : ny - 1])
+        translate([(i - (nx - 1) / 2) * GRID, (j - (ny - 1) / 2) * GRID, -0.1])
+            hull() {
+                gf_slice(0, FOOT_INSET_BOTTOM + wall, FOOT_R_BOTTOM + wall, 0.06);
+                gf_slice(FOOT_LOW, FOOT_INSET_VERT + wall, FOOT_R_VERT + wall, 0.06);
+                gf_slice(FOOT_H - 0.06, FOOT_INSET_VERT + wall, FOOT_R_VERT + wall, 0.06);
+            }
+}
+
+// ── internal divider grid ────────────────────────────────────────────────────
+// Compartments are made by ADDING walls, not by cutting pockets into an open
+// cavity: cutting into a cavity removes nothing (the space is already empty).
+// px x py = number of compartments; h = divider height above the cavity floor.
+module gf_dividers(nx, ny, px, py, h, wall = 1.2, grip = 0) {
+    inner_x = nx * GRID - TOL - 2 * WALL_DEF;
+    inner_y = ny * GRID - TOL - 2 * WALL_DEF;
+    for (i = [1 : px - 1]) {
+        x = -inner_x / 2 + inner_x * i / px;
+        translate([x - wall / 2, -inner_y / 2, HEIGHT_U]) cube([wall, inner_y, h]);
+        // grip notch so a part can be pinched out
+        if (grip > 0)
+            translate([x - wall / 2 - 0.01, 0, HEIGHT_U + h * 0.45])
+                cube([wall + 0.02, grip, h * 0.55]);
+    }
+    for (j = [1 : py - 1]) {
+        y = -inner_y / 2 + inner_y * j / py;
+        translate([-inner_x / 2, y - wall / 2, HEIGHT_U]) cube([inner_x, wall, h]);
+        if (grip > 0)
+            translate([0, y - wall / 2 - 0.01, HEIGHT_U + h * 0.45])
+                cube([grip, wall + 0.02, h * 0.55]);
+    }
+}
+
 // ── main module: tray / bin ──────────────────────────────────────────────────
 module gf_tray(nx, ny, h_u,
                wall = WALL_DEF, floor = FLOOR_DEF,
                lip = true, magnets = false, screws = false,
+               hollow_base = true,
                corner_r = FOOT_R_TOP) {
     difference() {
         union() {
-            // feet + bridge (bottom part up to 7 mm)
+            // feet, then the bridge plate that becomes the cavity floor
+            // (spec: the 7 mm base = 4.75 mm foot profile + 2.25 mm bridge, NOT a solid slab)
             gf_feet(nx, ny);
-            linear_extrude(height = HEIGHT_U)
-                offset(r = corner_r)
-                    square([nx * GRID - TOL - 2 * corner_r, ny * GRID - TOL - 2 * corner_r], center = true);
+            translate([0, 0, FOOT_H])
+                linear_extrude(height = HEIGHT_U - FOOT_H)
+                    offset(r = corner_r)
+                        square([nx * GRID - TOL - 2 * corner_r, ny * GRID - TOL - 2 * corner_r], center = true);
             // walls
             translate([0, 0, HEIGHT_U])
                 linear_extrude(height = h_u * HEIGHT_U - HEIGHT_U)
@@ -150,6 +190,7 @@ module gf_tray(nx, ny, h_u,
         }
         // cavity (floor is 7 mm above the build plate)
         gf_cavity(nx, ny, h_u, wall, floor, corner_r);
+        if (hollow_base) gf_base_hollow(nx, ny, wall);
         if (magnets || screws) gf_magnet_holes(nx, ny, screws);
     }
 }

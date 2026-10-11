@@ -14,15 +14,47 @@
   cells: {x: 3, y: 2}
   height_u: 3
   size_mm: {x: 125.5, y: 83.5, z: 21.0}
-  weight_g: 101
+  weight_g: 52
   pockets:
-    - {type: channel, count: 2, parts: [beam-1x8]}
+    - {type: divider, count: 1, parts: [beam-1x8]}
   parts_covered:
     beam-1x8: 2
   status: verified
   prints: 0
   preview: docs/img/fit_test_3x2x3.png
-  note: "Reference tray and Gridfinity fit test. Two flat channels for 1x8 beams with engraved labels. Print this first to confirm the 42 mm grid on your printer."
+  note: "Reference tray and Gridfinity fit test. One divider makes two channels for 1x8 beams, with engraved labels. Print this first to confirm the 42 mm grid on your printer."
+
+- id: sensor-tray-small-4x4
+  name: "Sensor tray 4x4 (16 small compartments)"
+  scad: scad/examples/sensor_tray.scad
+  kind: gridfinity_tray
+  cells: {x: 4, y: 4}
+  height_u: 5
+  size_mm: {x: 167.5, y: 167.5, z: 35.0}
+  weight_g: 173
+  pockets:
+    - {type: divider_grid, count: 16}
+  parts_covered: {}
+  status: verified
+  prints: 0
+  preview: docs/img/sensor_tray_small.png
+  note: "16 compartments of one grid cell each (~40 x 40 mm) — for small sensors and loose parts. Build: scad.py build scad/examples/sensor_tray.scad --name sensor_small --set NX=4 --set NY=4 --set H_U=5 --set PX=4 --set PY=4. Two of these hold 32 parts, i.e. the ~30 small sensors."
+
+- id: sensor-tray-large-4x3
+  name: "Sensor tray 4x3 (6 large compartments)"
+  scad: scad/examples/sensor_tray.scad
+  kind: gridfinity_tray
+  cells: {x: 4, y: 3}
+  height_u: 5
+  size_mm: {x: 167.5, y: 125.5, z: 35.0}
+  weight_g: 122
+  pockets:
+    - {type: divider_grid, count: 6}
+  parts_covered: {}
+  status: verified
+  prints: 0
+  preview: docs/img/sensor_tray_large.png
+  note: "6 compartments of two grid cells each (~82 x 40 mm) — for the bigger sensors. Build: scad.py build scad/examples/sensor_tray.scad --name sensor_large --set NX=4 --set NY=3 --set H_U=5 --set PX=2 --set PY=3."
 
 - id: gridfinity-baseplate-6x4
   name: "Gridfinity baseplate 6x4"
